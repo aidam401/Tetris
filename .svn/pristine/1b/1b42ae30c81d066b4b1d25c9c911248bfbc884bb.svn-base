@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="666.0" prefWidth="792.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <BarChart fx:id="barChart" prefHeight="666.0" prefWidth="785.0">
+        <xAxis>
+          <CategoryAxis side="LEFT" tickMarkVisible="false" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis fx:id="scoreChart" label="Score" side="LEFT" tickLabelGap="1.0">
+               <tickLabelFont>
+                  <Font name="Cooper Black" size="20.0" />
+               </tickLabelFont>
+            </NumberAxis>
+        </yAxis>
+      </BarChart>
+   </children>
+</AnchorPane>

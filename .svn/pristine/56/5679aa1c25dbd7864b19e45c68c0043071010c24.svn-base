@@ -1,0 +1,144 @@
+package polygons;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.geometry.Point2D;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
+import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Transform;
+
+/**
+ *
+ * @author Adam_Tomasek
+ */
+public abstract class Block {
+
+    protected Polygon polygon = new Polygon();
+
+    private final double WIDTH = 25;
+    private final double HEIGHT = 25;
+
+    private Point2D points;
+
+    public Block(double startX, double startY) {
+
+        create(startX, startY);
+        setTexture();
+    }
+
+    public void recalculateByRotation(Rotate rot) {
+        ObservableList<Double> fullPoints = this.polygon.getPoints();
+        ObservableList<Double> realFullPoints = FXCollections.observableArrayList();
+
+        for (int i = 0; i < fullPoints.size() - 1; i += 2) {
+            Point2D realPoint = rot.transform(
+                    new Point2D(fullPoints.get(i),
+                            fullPoints.get(i + 1)));
+
+           
+            realFullPoints.addAll((double) Math.round(realPoint.getX()),
+                    (double) Math.round(realPoint.getY()));
+        }
+
+        this.polygon.getPoints().clear();
+        this.polygon.getPoints().addAll(realFullPoints);
+
+
+    }
+
+    public Point2D getPoints() {
+        ObservableList<Double> fullPoints = this.polygon.getPoints();
+
+        return new Point2D(fullPoints.get(0), fullPoints.get(1));
+    }
+
+//    
+    public Polygon getPolygon() {
+        return polygon;
+    }
+
+    private void create(double x, double y) {
+        this.polygon.getPoints().addAll(new Double[]{
+            x, y,
+            x + this.WIDTH, y,
+            x + this.WIDTH, y + this.HEIGHT,
+            x, y + this.HEIGHT});
+
+    }
+
+    public void moveDown() {
+        ObservableList<Double> polPoints = this.polygon.getPoints();
+
+        for (int i = 0; i < polPoints.size(); i++) {
+            if (i % 2 == 1) {
+                polPoints.set(i, polPoints.get(i) + 25);
+            }
+        }
+
+    }
+
+    public void moveRight() {
+        ObservableList<Double> polPoints = this.polygon.getPoints();
+        for (int i = 0; i < polPoints.size(); i++) {
+            if (i % 2 == 0) {
+                polPoints.set(i, polPoints.get(i) + 25);
+            }
+        }
+
+    }
+
+    public void moveLeft() {
+        ObservableList<Double> polPoints = this.polygon.getPoints();
+        for (int i = 0; i < polPoints.size(); i++) {
+            if (i % 2 == 0) {
+                polPoints.set(i, polPoints.get(i) - 25);
+            }
+        }
+
+    }
+
+    public void rotate(double structureStartX, double structureStartY, double pivotX, double pivotY, Pane pane) {
+        //System.out.println(structureStartX);
+        //System.out.println(pivotX);
+        Point2D realPoint = new Point2D(this.getPoints().getX() + (this.WIDTH / 2), this.getPoints().getY() + (this.HEIGHT / 2));
+        Polygon npl = new Polygon(realPoint.getX(), realPoint.getY(),
+                realPoint.getX() + 5, realPoint.getY(),
+                realPoint.getX() + 5, realPoint.getY() + 5,
+                realPoint.getX(), realPoint.getY() + 5);
+        npl.setFill(Color.GREEN);
+        pane.getChildren().add(npl);
+
+//        Point2D realPoint2 = new Point2D(structureStartX + pivotX, structureStartY + pivotY);
+//        Polygon npl2 = new Polygon(realPoint.getX(), realPoint.getY(),
+//                realPoint2.getX() + 5, realPoint2.getY(),
+//                realPoint2.getX() + 5, realPoint2.getY() + 5,
+//                realPoint2.getX(), realPoint2.getY() + 5);
+//        npl.setFill(Color.ORANGE);
+//        pane.getChildren().add(npl2);
+        ObservableList<Transform> trans = this.polygon.getTransforms();
+        Rotate rot1 = new Rotate(90, structureStartX + pivotX - 12.5, structureStartY + pivotY - 12.5);
+        //trans.add(new Rotate(-90, this.getPoints().getX() + (this.WIDTH / 2), this.getPoints().getY() + (this.HEIGHT / 2)));
+        //recalculatePoints();
+        recalculateByRotation(rot1);
+        //trans.add(rot1);
+
+//        this.polygon.getTransforms().addAll(
+//                new Rotate(-90, this.getPoints().getX() + (this.WIDTH / 2), this.getPoints().getY() + (this.HEIGHT / 2))
+        //new Rotate(90, structureStartX + pivotX, structureStartY + pivotY)
+//        );
+        //recalculatePoints();
+    }
+
+    public abstract void setTexture();
+
+    public double getWIDTH() {
+        return WIDTH;
+    }
+
+    public double getHEIGHT() {
+        return HEIGHT;
+    }
+
+}

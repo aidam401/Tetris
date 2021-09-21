@@ -1,0 +1,106 @@
+package polygons;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Transform;
+import static polygons.TypedBlock.*;
+
+/**
+ *
+ * @author Adam_Tomasek
+ */
+public final class TypedStructure {
+
+    public static Structure typeAStructure() {
+        return new Structure(125, 0, 75, 50, 37.5, 12.5) {
+            @Override
+            public void create() {
+                super.polygons = Arrays.asList(
+                        aBlock(this.startX, this.startY),
+                        aBlock(this.startX + 25, this.startY),
+                        aBlock(this.startX + 25, this.startY - 25),
+                        aBlock(this.startX + 50, this.startY));
+            }
+        };
+    }
+
+    public static Structure typeBStructure() {
+        return new Structure(125, 0, 75, 50, 37.5, 12.5-25) {
+            @Override
+            public void create() {
+                super.polygons = Arrays.asList(
+                        bBlock(this.startX, this.startY - 25),
+                        bBlock(this.startX + 25, this.startY - 25),
+                        bBlock(this.startX + 50, this.startY - 25),
+                        bBlock(this.startX + 50, this.startY)
+                );
+            }
+        };
+    }
+
+    public static Structure typeCStructure() {
+        return new Structure(125, 0, 75, 50, 37.5, 12.5) {
+            @Override
+            public void create() {
+                super.polygons = Arrays.asList(
+                        cBlock(this.startX, this.startY - 25),
+                        cBlock(this.startX + 25, this.startY - 25),
+                        cBlock(this.startX + 25, this.startY),
+                        cBlock(this.startX + 50, this.startY)
+                );
+            }
+
+        };
+    }
+
+    public static Structure typeDStructure() {
+        return new Structure(125, 0, 50, 50, 25,25) {
+            @Override
+            public void create() {
+                super.polygons = Arrays.asList(
+                        dBlock(this.startX, this.startY),
+                        dBlock(this.startX + 25, this.startY),
+                        dBlock(this.startX + 25, this.startY + 25),
+                        dBlock(this.startX, this.startY + 25)
+                );
+            }
+         
+           
+            
+        };
+    }
+
+    public static Structure typeEStructure() {
+        return new Structure(125, 0, 75, 50, 37.5, 12.5) {
+            @Override
+            public void create() {
+                super.polygons = Arrays.asList(
+                        eBlock(this.startX, this.startY),
+                        eBlock(this.startX + 25, this.startY),
+                        eBlock(this.startX + 25, this.startY - 25),
+                        eBlock(this.startX + 50, this.startY - 25)
+                );
+            }
+
+          
+        };
+    }
+
+    public static Structure typeFStructure() {
+        return new Structure(125, 0, 100, 25, 50, 0) {
+            @Override
+            public void create() {
+                super.polygons = Arrays.asList(
+                        fBlock(this.startX, this.startY),
+                        fBlock(this.startX + 25, this.startY),
+                        fBlock(this.startX + 50, this.startY),
+                        fBlock(this.startX + 75, this.startY)
+                );
+            }
+
+        };
+    }
+
+}

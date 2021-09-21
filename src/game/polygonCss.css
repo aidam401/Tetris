@@ -1,0 +1,36 @@
+.a-block{
+    -fx-fill: #9e0949;
+    -fx-stroke: white;
+    -fx-stroke-type: inside; 
+}
+.b-block{
+    -fx-fill: #09739c;
+    -fx-stroke: white;
+    -fx-stroke-type: inside; 
+}
+
+.c-block{
+    -fx-fill: #f7ff01;
+    -fx-stroke: red;
+    -fx-stroke-type: inside; 
+    -fx-stroke-width: 2;
+}
+.d-block{
+    -fx-fill: #f7ff01;
+    -fx-stroke: red;
+    -fx-stroke-type: inside; 
+    -fx-stroke-width: 2;   
+}
+
+.e-block{
+    -fx-fill: #ff0080;
+    -fx-stroke: black;
+    -fx-stroke-type: inside; 
+}
+
+.f-block{
+    -fx-fill:#09739c;
+    -fx-stroke: black;
+    -fx-stroke-type: inside; 
+    -fx-stroke-width: 2;   
+}

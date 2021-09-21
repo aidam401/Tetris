@@ -1,0 +1,169 @@
+package polygons;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.stream.Collectors;
+import javafx.collections.ObservableList;
+import javafx.geometry.Point2D;
+import javafx.scene.Group;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
+import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Transform;
+
+/**
+ *
+ * @author Adam_Tomasek
+ */
+public abstract class Structure {
+
+    protected double startX;
+    protected double startY;
+
+    protected double width;
+    protected double height;
+
+    private double actualX = 0;
+    private double actualY = 0;
+
+    private double pivotX;
+    private double pivotY;
+
+    private boolean pinned = false;
+
+    protected Collection<Block> polygons;
+
+    protected Structure(double startX, double startY, double width,
+            double height, double pivotX, double pivotY) {
+
+        this.height = height;
+        this.width = width;
+
+        this.startX = startX;
+        this.startY = startY;
+
+        this.pivotX = pivotX;
+        this.pivotY = pivotY;
+    }
+
+    public void pinn() {
+        this.pinned = true;
+    }
+
+    public boolean isPinned() {
+        return this.pinned;
+    }
+
+    public void moveDown() {
+        if (!pinned) {
+            this.polygons.forEach(bl -> bl.moveDown());
+            this.actualY += 25;
+        }
+    }
+
+    public void moveRight() {
+        if (!pinned) {
+            this.polygons.forEach(bl -> bl.moveRight());
+            this.actualX += 25;
+        }
+    }
+
+    public void moveLeft() {
+        if (!pinned) {
+            this.polygons.forEach(bl -> bl.moveLeft());
+            this.actualX -= 25;
+        }
+    }
+
+    public ArrayList<Point2D> getPointsAfterRotation(int addAngle) {
+        ArrayList<Point2D> output = new ArrayList<Point2D>();
+
+        return output;
+
+    }
+
+    public void rotate(Pane par) {
+        System.out.println("rot");
+        //ArrayList<Point2D> pointsAfterRotation = getPointsAfterRotation(90);
+        //Iterator<Point2D> iterator = pointsAfterRotation.iterator();
+        this.polygons.forEach(bl -> bl.rotate(this.actualX, this.actualY, this.pivotX, this.pivotY, par));
+         
+//            Polygon pol = bl.getPolygon();
+//            Point2D points = bl.getPoints();
+//            
+//            System.out.println(points);
+//            Rotate rotate = new Rotate(90, 
+//                    pivotX+points.getX(), 
+//                    pivotY+points.getY());
+//            pol.getTransforms().add(rotate);
+////            pol.getTransforms().clear();
+//            Rotate rot1 = new Rotate(rotation, pivotX - 12.5, pivotY - 12.5);
+//            pol.getTransforms().add(rot1);
+//
+//            Point2D realPoint = pol.localToParent(bl.getStartPoints());
+//            Point2D realPoint = iterator.next();
+        //bl.setPoints(realPoint);
+
+//            pol.getTransforms().clear();
+//            Rotate rot = new Rotate(rotation, pivotX + bl.getStartPoints().getX(), pivotY + bl.getStartPoints().getY());
+//
+//            pol.getTransforms().add(rot);
+//
+//            Polygon npl = new Polygon(realPoint.getX(), realPoint.getY(),
+//                    realPoint.getX() + 25, realPoint.getY(),
+//                    realPoint.getX() + 25, realPoint.getY() + 25,
+//                    realPoint.getX(), realPoint.getY() + 25);
+//
+//            npl.setFill(Color.WHITE);
+//            par.getChildren().add(npl);
+    }
+
+    public Collection<Block> getPolygons() {
+        return polygons;
+    }
+
+    public void setPolygons(Collection<Block> polygons) {
+        this.polygons = polygons;
+    }
+
+    public abstract void create();
+
+    public double getWidth() {
+
+        return this.width;
+    }
+
+    public double getHeight() {
+        return this.height;
+    }
+
+    public double getActualX() {
+        return this.actualX;
+    }
+
+    public double getActualY() {
+        return this.actualY;
+    }
+
+    public Point2D[] getPositions() {
+
+        return this.polygons
+                .stream()
+                .map(bl -> bl.getPoints())
+                .toArray(Point2D[]::new);
+
+    }
+
+    public Group getStructure() {
+
+        return new Group(this.polygons
+                .stream()
+                .map(bl -> bl.getPolygon())
+                .collect(Collectors.toList()));
+
+    }
+
+}
